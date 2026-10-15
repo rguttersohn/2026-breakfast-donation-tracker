@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true
   },
+  pages: false,
 
   css: ['~/assets/css/main.css'],
 
@@ -24,5 +25,8 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+  ui: {
+    colorMode: false
   }
 })

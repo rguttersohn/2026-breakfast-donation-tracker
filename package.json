@@ -14,7 +14,9 @@
     "@iconify-json/lucide": "^1.2.142",
     "@iconify-json/simple-icons": "^1.2.99",
     "@nuxt/ui": "^4.11.3",
+    "@types/papaparse": "^5.5.2",
     "nuxt": "^4.6.1",
+    "papaparse": "^5.7.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {

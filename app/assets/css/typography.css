@@ -1,0 +1,31 @@
+@layer base {
+    body{
+
+        font-family: "National", sans-serif;
+        font-variant-numeric: lining-nums tabular-nums;
+
+    }
+    
+    h1 {
+
+        @apply text-[2rem] lg:text-[5rem] text-neutral-900 font-bold tracking-tight leading-tight;
+    }
+    
+    h2 {
+        @apply text-4xl text-neutral-900;
+    }
+    
+    h3 {
+        @apply text-3xl text-neutral-900;
+    }
+    
+    h4 {
+        @apply text-3xl text-neutral-900;
+    }
+    
+    p {
+        @apply text-3xl text-neutral-900 leading-snug font-normal;
+    }
+   
+}
+
