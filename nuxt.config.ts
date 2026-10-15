@@ -4,7 +4,14 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui'
   ],
-
+  app:{
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/img/ccc-logo-color-favicon.png' },
+      ],
+    },
+    cdnURL: process.env.NUXT_CDN_URL
+  },
   devtools: {
     enabled: true
   },
@@ -28,5 +35,10 @@ export default defineNuxtConfig({
   },
   ui: {
     colorMode: false
-  }
+  },
+  runtimeConfig: {
+    s3Bucket: process.env.NUXT_S3_BUCKET,
+    s3Key: process.env.NUXT_S3_KEY,
+    s3SecretKey: process.env.NUXT_S3_SECRET_KEY,
+  },
 })

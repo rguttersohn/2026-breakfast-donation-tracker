@@ -1,34 +1,50 @@
-name: ci
+name: Deploy Production
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [24]
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Install node
-        uses: actions/setup-node@v7
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
-          cache: pnpm
+          node-version: 24
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
-      - name: Lint
-        run: pnpm run lint
+      - name: Build
+        run: npm run build
+        env:
+          NUXT_CDN_URL: ${{ vars.NUXT_CDN_URL }}
 
-      - name: Typecheck
-        run: pnpm run typecheck
+
+      - name: Verify build output
+        run: |
+          test -d .output && test -n "$(ls -A .output)" || (echo "ERROR: .output directory is missing or empty" && exit 1)
+      
+       # --- Push public assets to S3 ---
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.NUXT_S3_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.NUXT_S3_SECRET_KEY }}
+          aws-region: us-east-1
+
+      - name: Sync public assets to S3
+        env: 
+            s3_bucket: ${{ secrets.NUXT_S3_BUCKET }}
+        run: |
+          aws s3 sync .output/public/ s3://$s3_bucket/ \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "*.html"
