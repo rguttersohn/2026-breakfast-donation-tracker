@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 
 const store = useStore();
+const config = useRuntimeConfig();
 
 onMounted(async () => {
   
@@ -10,7 +11,7 @@ onMounted(async () => {
 
     store.csvObject.value = await fetchDonations();
 
-  }, 1000);
+  }, parseInt(config.public.fetchInterval));
 
 });
 

@@ -25,6 +25,8 @@ jobs:
       
       - name: Generate static site
         run: npx nuxi generate
+        env: 
+            NUXT_FETCH_INTERVAL: ${{ vars.NUXT_FETCH_INTERVAL }}
 
       - name: Build
         run: npm run build

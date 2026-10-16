@@ -39,5 +39,8 @@ export default defineNuxtConfig({
     s3Bucket: process.env.NUXT_S3_BUCKET,
     s3Key: process.env.NUXT_S3_KEY,
     s3SecretKey: process.env.NUXT_S3_SECRET_KEY,
+    public: {
+      fetchInterval: process.env.NUXT_FETCH_INTERVAL
+    }
   },
 })
