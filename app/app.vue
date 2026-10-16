@@ -19,11 +19,10 @@ onMounted(async () => {
 
 <template>
   <UApp>
-    <UPageGrid 
-      as="main" 
-      class="lg:grid-cols-14 w-screen h-screen overflow-hidden bg-primary-900"
+    <main 
+      class="w-screen h-screen px-10 bg-primary-900"
     >
-      <div class="relative col-start-2 col-span-12 p-10">
+      <div class="relative p-10 h-full">
         <div class="absolute inset-0 bg-primary-50"></div>
         <div 
           class="absolute top-0 w-3/4 h-[50vh] opacity-66 bg-map">
@@ -33,12 +32,12 @@ onMounted(async () => {
           <LazyHeader hydrate-never/>
           <UPageGrid class="lg:grid-cols-12 gap-x-30">
             <TotalRaised class="col-start-1 col-span-8"/>
-            <QrCode class="col-span-4"/>
+            <LazyQrCode hydrate-never class="col-span-4"/>
           </UpageGrid>
         </div>
         <LazyFooter hydrate-never class="relative z-10"/>
       </div>
-    </UPageGrid>
+    </main>
   </UApp>
 </template>
 
