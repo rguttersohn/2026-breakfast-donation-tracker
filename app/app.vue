@@ -11,7 +11,7 @@ onMounted(async () => {
 
     store.csvObject.value = await fetchDonations();
 
-  }, parseInt(config.public.fetchInterval));
+  }, Number(config.public.fetchInterval) || 60000);
 
 });
 
