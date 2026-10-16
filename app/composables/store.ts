@@ -23,7 +23,7 @@ const total = computed(():number => {
 
 const total_string = computed(()=>toCurrency(total.value));
 
-const total_percent = computed(()=>`${(total.value/GOAL*100).toFixed(0)}%`);
+const total_percent = computed(()=>`${(total.value/GOAL*100).toFixed(1)}%`);
 
 const goal_string = computed(()=>toCurrency(GOAL));
 
