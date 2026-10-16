@@ -29,11 +29,16 @@ onMounted(async () => {
           class="absolute top-0 w-3/4 h-[50vh] opacity-66 bg-map">
         </div>
         <Banner/>
-        <div class="flex flex-col justify-around h-full">
-          <Header/>
+        <div class="flex flex-col justify-around h-full w-full">
+          <UPageGrid class="lg:grid-cols-12 gap-x-30">
+            <Header class="col-span-6"/>
+            <DonorList class="col-start-9 col-span-4"/>
+          </UPageGrid>
           <UPageGrid class="lg:grid-cols-12 gap-x-30">
             <TotalRaised class="col-start-1 col-span-8"/>
-            <QrCode class="col-span-4"/>
+            <div class="col-span-4">
+              <QrCode/>
+            </div>
           </UpageGrid>
         </div>
       </div>

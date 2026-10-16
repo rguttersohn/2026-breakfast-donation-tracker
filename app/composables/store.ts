@@ -1,6 +1,5 @@
 import type { CSVData } from './../../types/csv';
 
-
 const GOAL = 800000;
 
 const TOTAL_BASE = 730000;
@@ -21,6 +20,23 @@ const total = computed(():number => {
 
 });
 
+const donors = computed(()=>{
+
+  if(!csvObject.value){
+
+    return [];
+
+  }
+
+  return csvObject.value.map(data=>({
+    donor: data["Donor / identifier"],
+    amount: data["Amount ($)"],
+    type: data["Record type"]
+  }))
+
+
+})
+
 const total_string = computed(()=>toCurrency(total.value));
 
 const total_percent = computed(()=>`${(total.value/GOAL*100).toFixed(0)}%`);
@@ -35,6 +51,7 @@ export function useStore(){
 
     return {
         csvObject,
+        donors,
         total, 
         total_string,
         total_percent,
