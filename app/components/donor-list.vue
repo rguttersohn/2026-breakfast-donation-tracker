@@ -20,7 +20,7 @@
         >
         <div 
             v-if="item" 
-            class="p-[15px] bg-white rounded-sm"
+            class="p-[15px] border border-primary-100 bg-white rounded-sm"
         >
             <p>{{ item.donor }}</p>
             <p class="text-xl">{{ item.amount }} ({{ item.type }})</p>
