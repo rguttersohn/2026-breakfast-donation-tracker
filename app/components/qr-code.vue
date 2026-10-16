@@ -6,7 +6,7 @@
             class="border border-primary-200"
         >
         <h2 class="text-center">Give or pledge now!</h2>
-        <p>
+        <p class="text-center">
             Scan with your phone. Every gift drives change.
         </p>
     </div>
