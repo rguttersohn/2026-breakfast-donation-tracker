@@ -10,7 +10,6 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/img/ccc-logo-color-favicon.png' },
       ],
     },
-    cdnURL: process.env.NUXT_CDN_URL
   },
   devtools: {
     enabled: true
