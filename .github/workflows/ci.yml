@@ -3,7 +3,7 @@ name: Deploy Production
 on:
   push:
     branches:
-      - feature/add-donor-list
+      - feauture/add-donor-list
 
 jobs:
   deploy:
