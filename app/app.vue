@@ -45,10 +45,10 @@ onMounted(async () => {
 
     .bg-map {
         background: 
-            radial-gradient(ellipse at top left, rgba(255, 255, 255, 0) 0%, var(--color-blue-50) 90%),    
+            radial-gradient(ellipse at top left, rgba(255, 255, 255, 0) 10%, var(--color-blue-50) 80%),    
             url('/img/nyc-bg.png');
         background-repeat: no-repeat;
-        background-position: 0 0, 1vw 66%;
+        background-position: 0 0, 30% 56%;
         background-size: cover, 135%;
     }
 
