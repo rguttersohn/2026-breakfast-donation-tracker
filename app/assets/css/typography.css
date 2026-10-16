@@ -2,7 +2,7 @@
     body{
 
         font-family: "National", sans-serif;
-        font-variant-numeric: lining-nums tabular-nums;
+        font-variant-numeric: lining-nums proportional-nums;
 
     }
     
@@ -12,7 +12,7 @@
     }
     
     h2 {
-        @apply text-4xl text-neutral-900;
+        @apply text-4xl text-neutral-900 font-bold;
     }
     
     h3 {

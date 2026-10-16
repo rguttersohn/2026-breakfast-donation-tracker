@@ -1,7 +1,9 @@
 import type { CSVData } from './../../types/csv';
 
 
-const GOAL = 100000;
+const GOAL = 800000;
+
+const TOTAL_BASE = 730000;
 
 const csvObject = ref<CSVData[]>();
 
@@ -9,27 +11,25 @@ const total = computed(():number => {
 
   if(!csvObject.value){
 
-    return 0;
+    return TOTAL_BASE;
 
   }
   
-  const total = csvObject.value.reduce((a, b) =>{
+  const total = sumColumn(csvObject.value, 'Amount ($)');
 
-    return a + parseCurrency(b["Amount ($)"]);
-
-  }, 0)
-
-  return total;
+  return TOTAL_BASE + total;
 
 });
 
-const total_string = computed(()=>total.value.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      })
-);
+const total_string = computed(()=>toCurrency(total.value));
 
 const total_percent = computed(()=>`${(total.value/GOAL*100).toFixed(0)}%`);
+
+const goal_string = computed(()=>toCurrency(GOAL));
+
+const goalDifference = computed(()=>GOAL - total.value);
+
+const goalDifference_string = computed(()=>toCurrency(goalDifference.value));
 
 export function useStore(){
 
@@ -37,7 +37,11 @@ export function useStore(){
         csvObject,
         total, 
         total_string,
-        total_percent
+        total_percent,
+        goal: GOAL,
+        goal_string,
+        goalDifference,
+        goalDifference_string
     }
 
 }
