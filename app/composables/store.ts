@@ -1,33 +1,37 @@
 import type { CSVData } from './../../types/csv';
 
-
 const GOAL = 800000;
 
 const TOTAL_BASE = 730000;
 
 const csvObject = ref<CSVData[]>();
 
-const total = computed(():number => {
+export async function fetchDonations():Promise<CSVData[]>{
 
-  if(!csvObject.value){
+  const SHEET_ID = "1YzRPvDuZRVfQsGPMY5SrtDYdxtPhqiuIYaNJVK-LPPE";
 
-    return TOTAL_BASE;
+  const GID = "1364117045";
 
-  }
-  
-  const total = sumColumn(csvObject.value, 'Amount ($)');
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 
-  return TOTAL_BASE + total;
+  const response = await $fetch<string>(url);
 
-});
+  return parseDonationsCsv(response);
+
+}
+
+
+const progress = computed(()=>calcProgress(csvObject.value, TOTAL_BASE, GOAL));
+
+const total = computed(():number => progress.value.total);
 
 const total_string = computed(()=>toCurrency(total.value));
 
-const total_percent = computed(()=>`${(total.value/GOAL*100).toFixed(1)}%`);
+const total_percent = computed(()=>progress.value.percent);
 
 const goal_string = computed(()=>toCurrency(GOAL));
 
-const goalDifference = computed(()=>GOAL - total.value);
+const goalDifference = computed(()=>progress.value.remaining);
 
 const goalDifference_string = computed(()=>toCurrency(goalDifference.value));
 
@@ -35,7 +39,8 @@ export function useStore(){
 
     return {
         csvObject,
-        total, 
+        fetchDonations,
+        total,
         total_string,
         total_percent,
         goal: GOAL,

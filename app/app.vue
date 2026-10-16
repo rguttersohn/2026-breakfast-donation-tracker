@@ -5,11 +5,11 @@ const config = useRuntimeConfig();
 
 onMounted(async () => {
   
-  store.csvObject.value = await fetchDonations();
+  store.csvObject.value = await store.fetchDonations();
 
   window.setInterval(async ()=>{
 
-    store.csvObject.value = await fetchDonations();
+    store.csvObject.value = await store.fetchDonations();
 
   }, Number(config.public.fetchInterval) || 60000);
 

@@ -1,8 +1,22 @@
 import type { CSVData } from "~~/types/csv";
 
-export function parseCurrency(str:string){
+export function parseCurrency(str:string | undefined | null):number{
     
-    return Number(str.replace(/[^0-9.-]/g, ''))
+    if(!str){
+        
+        return 0;
+        
+    }
+
+    const number = Number(str.replace(/[^0-9.-]/g, ''))
+
+    if(Number.isNaN(number)){
+
+        return 0;
+
+    }
+
+    return number;
 
 };
 
