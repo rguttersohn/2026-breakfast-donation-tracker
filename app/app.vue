@@ -28,14 +28,15 @@ onMounted(async () => {
         <div 
           class="absolute top-0 w-3/4 h-[50vh] opacity-66 bg-map">
         </div>
-        <Banner/>
-        <div class="flex flex-col justify-around h-full">
-          <Header/>
+        <LazyBanner hydrate-never/>
+        <div class="flex flex-col justify-around h-11/12">
+          <LazyHeader hydrate-never/>
           <UPageGrid class="lg:grid-cols-12 gap-x-30">
             <TotalRaised class="col-start-1 col-span-8"/>
             <QrCode class="col-span-4"/>
           </UpageGrid>
         </div>
+        <LazyFooter hydrate-never class="relative z-10"/>
       </div>
     </UPageGrid>
   </UApp>
