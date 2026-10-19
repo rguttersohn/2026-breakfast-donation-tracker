@@ -13,7 +13,19 @@ export function parseDonationsCsv(csvText:string):CSVData[]{
         },
     });
 
-    return parsed.data;
+    const {data} = parsed;
+
+    return data.filter(d=>{
+
+        if(!d.Published){
+
+            return false;
+
+        }
+
+        return d.Published.toLowerCase().trim() === 'true';
+        
+    });
 
 }
 

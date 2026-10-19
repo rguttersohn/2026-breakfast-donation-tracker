@@ -7,15 +7,15 @@ import { parseDonationsCsv, calcProgress } from './sheet';
 // describe the *desired* behavior, so failures point at what needs hardening.
 
 const PREAMBLE = [
-    'Breakfast Fund Donations,,,,,,,,,',
-    'Updated live,,,,,,,,,',
-    ',,,,,,,,,',
+    'Breakfast Fund Donations,,,,,,,,,,',
+    'Updated live,,,,,,,,,,',
+    ',,,,,,,,,,',
 ];
 
-const HEADER = 'Record ID,Date / time,Donor / identifier,Email  (optional),Source,Record type,Amount ($),Notes,Counts to committed,Counts as received';
+const HEADER = 'Record ID,Date / time,Donor / identifier,Email  (optional),Source,Record type,Amount ($),Notes,Counts to committed,Counts as received,Published';
 
-function csvRow(id: string, amount: string): string {
-    return `${id},10/1/2026 9:00,Donor ${id},,Online,Gift,${amount},,Yes,Yes`;
+function csvRow(id: string, amount: string, published = 'TRUE'): string {
+    return `${id},10/1/2026 9:00,Donor ${id},,Online,Gift,${amount},,Yes,Yes,${published}`;
 }
 
 function csv(lines: string[], { preamble = PREAMBLE, header = HEADER } = {}): string {
@@ -35,6 +35,7 @@ function row(amount: string): CSVData {
         "Notes": '',
         "Counts to committed": '',
         "Counts as received": '',
+        "Published": 'TRUE',
     };
 
 }
@@ -92,6 +93,52 @@ describe('parseDonationsCsv', () => {
             expect(r).toHaveProperty(['Amount ($)']);
             expect(typeof r["Amount ($)"]).toBe('string');
         }
+
+    });
+
+    describe('Published filter', () => {
+
+        it.each(['TRUE', 'true', 'True', 'tRuE', ' TRUE', 'TRUE ', '  true  ', '\tTrue'])('keeps a row published as %j', (published) => {
+
+            const rows = parseDonationsCsv(csv([csvRow('1', '100', published)]));
+
+            expect(rows).toHaveLength(1);
+            expect(rows[0]!["Record ID"]).toBe('1');
+
+        });
+
+        it.each(['FALSE', 'false', '', '   ', 'yes', '1', 't rue'])('excludes a row published as %j', (published) => {
+
+            const rows = parseDonationsCsv(csv([csvRow('1', '100', published)]));
+
+            expect(rows).toEqual([]);
+
+        });
+
+        it('returns only the published rows from a mixed sheet, in order', () => {
+
+            const rows = parseDonationsCsv(csv([
+                csvRow('1', '100', 'TRUE'),
+                csvRow('2', '200', 'FALSE'),
+                csvRow('3', '300', ' true '),
+                csvRow('4', '400', ''),
+                csvRow('5', '500', 'True'),
+            ]));
+
+            expect(rows.map(r => r["Record ID"])).toEqual(['1', '3', '5']);
+
+        });
+
+        it('excludes a row whose Published cell is missing without throwing', () => {
+
+            // A short row: every column except Published.
+            const shortRow = '2,10/1/2026 9:00,Donor 2,,Online,Gift,200,,Yes,Yes';
+            const text = csv([csvRow('1', '100'), shortRow]);
+
+            expect(() => parseDonationsCsv(text)).not.toThrow();
+            expect(parseDonationsCsv(text).map(r => r["Record ID"])).toEqual(['1']);
+
+        });
 
     });
 

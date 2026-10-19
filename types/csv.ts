@@ -10,5 +10,6 @@ export interface CSVData {
     "Notes": string,
     "Counts to committed": string,
     "Counts as received": string,
+    "Published": string,
 
 }
