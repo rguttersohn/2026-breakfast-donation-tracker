@@ -40,9 +40,9 @@ export default defineNuxtConfig({
     s3Key: process.env.NUXT_S3_KEY,
     s3SecretKey: process.env.NUXT_S3_SECRET_KEY,
     public: {
-      fetchInterval: process.env.NUXT_FETCH_INTERVAL,
-      sheetId: process.env.NUXT_SHEET_ID,
-      gid: process.env.NUXT_GID
+      fetchInterval: process.env.NUXT_PUBLIC_FETCH_INTERVAL,
+      sheetId: process.env.NUXT_PUBLIC_SHEET_ID,
+      gid: process.env.NUXT_PUBLIC_GID
     }
   },
 })
