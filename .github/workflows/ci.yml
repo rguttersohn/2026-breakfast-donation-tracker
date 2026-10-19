@@ -27,6 +27,8 @@ jobs:
         run: npx nuxi generate
         env: 
             NUXT_FETCH_INTERVAL: ${{ vars.NUXT_FETCH_INTERVAL }}
+            NUXT_SHEET_ID: ${{ vars.NUXT_SHEET_ID }}
+            NUXT_GID: ${{ vars.NUXT_GID }}
 
       - name: Build
         run: npm run build
